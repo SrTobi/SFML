@@ -56,7 +56,9 @@ include_directories(${OPENAL_INCLUDE_DIR} ${SNDFILE_INCLUDE_DIR})
 if(SFML_OS_ANDROID)
     list(APPEND AUDIO_EXT_LIBS -landroid -lOpenSLES)
 endif()
-list(APPEND AUDIO_EXT_LIBS ${OPENAL_LIBRARY} ${SNDFILE_LIBRARY})
+
+sfml_import_external_library(external::sndfile-target SHARED LINK_FILES ${SNDFILE_LIBRARY})
+list(APPEND AUDIO_EXT_LIBS ${OPENAL_LIBRARY} external::sndfile-target)
 
 # define the sfml-audio target
 sfml_add_library(sfml-audio

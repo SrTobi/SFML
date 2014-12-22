@@ -122,6 +122,29 @@ macro(sfml_add_library target)
     target_include_directories(${target} PUBLIC $<INSTALL_INTERFACE:include>)
 endmacro()
 
+macro(sfml_import_external_library target)
+
+    # parse the arguments
+    cmake_parse_arguments(THIS "SHARED;STATIC" "" "LINK_FILES" ${ARGN})
+
+    if(THIS_SHARED)
+        add_library(${target} SHARED IMPORTED)
+    elseif(THIS_STATIC)
+        add_library(${target} STATIC IMPORTED)
+    else()
+        add_library(${target} UNKNOWN IMPORTED)
+    endif()
+
+    # add library files
+    set_target_properties(${target} PROPERTIES IMPORTED_IMPLIB_DEBUG "${THIS_LINK_FILES}")
+
+    install(TARGETS ${target} EXPORT sfml-package-target
+            RUNTIME DESTINATION bin COMPONENT bin
+            LIBRARY DESTINATION lib${LIB_SUFFIX} COMPONENT bin
+            ARCHIVE DESTINATION lib${LIB_SUFFIX} COMPONENT devel
+            FRAMEWORK DESTINATION ${CMAKE_INSTALL_FRAMEWORK_PREFIX} COMPONENT bin)
+endmacro(sfml_import_external_library)
+
 # add a new target which is a SFML example
 # ex: sfml_add_example(ftp
 #                      SOURCES ftp.cpp ...
