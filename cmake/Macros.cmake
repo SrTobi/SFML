@@ -116,10 +116,10 @@ macro(sfml_add_library target)
             ARCHIVE DESTINATION lib${LIB_SUFFIX} COMPONENT devel
             FRAMEWORK DESTINATION ${CMAKE_INSTALL_FRAMEWORK_PREFIX} COMPONENT bin)
 
-	# add <project>/include as public include directory
-	# the first one is for the local package and the second one is for the installed package
-	target_include_directories(${target} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
-	target_include_directories(${target} PUBLIC $<INSTALL_INTERFACE:include>)
+    # add <project>/include as public include directory
+    # the first one is for the local package and the second one is for the installed package
+    target_include_directories(${target} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
+    target_include_directories(${target} PUBLIC $<INSTALL_INTERFACE:include>)
 endmacro()
 
 # add a new target which is a SFML example

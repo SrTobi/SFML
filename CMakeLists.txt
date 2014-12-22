@@ -313,37 +313,37 @@ set(export_namespace "sfml::")
 set(local_export_dir ${CMAKE_CURRENT_BINARY_DIR}/sfml-package)
 
 # create package file. This will manage the package
-configure_file(	${CMAKE_CURRENT_SOURCE_DIR}/cmake/config-package.in.cmake
-				${local_export_dir}/${config_file_name}
-				@ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/config-package.in.cmake
+               ${local_export_dir}/${config_file_name}
+               @ONLY)
 
 # create a basic package version file
 write_basic_package_version_file(${local_export_dir}/${version_file_name}
-									VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
-									COMPATIBILITY AnyNewerVersion )
+                                 VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
+                                 COMPATIBILITY AnyNewerVersion )
 
 # create a file which contains all he informations about sfml targets
-export(	EXPORT sfml-package-target
-		FILE ${local_export_dir}/${targets_file_name}
-		NAMESPACE ${export_namespace})
+export(EXPORT sfml-package-target
+       FILE ${local_export_dir}/${targets_file_name}
+       NAMESPACE ${export_namespace})
 
 # register current build directory in the cmake user package registry
 export(PACKAGE sfml)
 
 # config files must be installed in special directories inside the install directory
 if(SFML_OS_WINDOWS)
-	set(config_install_dir cmake/)
+    set(config_install_dir cmake/)
 else()
-	set(config_install_dir share/SFML/cmake/)
+    set(config_install_dir share/SFML/cmake/)
 endif()
 
 # install targets, config and version files
 install(EXPORT sfml-package-target
-		FILE ${targets_file_name}
-		DESTINATION ${config_install_dir}
-		NAMESPACE ${export_namespace}
-		COMPONENT devel)
-install(FILES	${local_export_dir}/${config_file_name}
-				${local_export_dir}/${version_file_name}
-		DESTINATION ${config_install_dir}
-		COMPONENT devel)
+        FILE ${targets_file_name}
+        DESTINATION ${config_install_dir}
+        NAMESPACE ${export_namespace}
+        COMPONENT devel)
+install(FILES ${local_export_dir}/${config_file_name}
+              ${local_export_dir}/${version_file_name}
+        DESTINATION ${config_install_dir}
+        COMPONENT devel)
