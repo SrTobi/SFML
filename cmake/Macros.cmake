@@ -66,7 +66,8 @@ macro(sfml_add_library target)
 
     # link the target to its SFML dependencies
     if(THIS_DEPENDS)
-        target_link_libraries(${target} ${THIS_DEPENDS})
+        # and make it public
+        target_link_libraries(${target} PUBLIC ${THIS_DEPENDS})
     endif()
 
     # build frameworks or dylibs
@@ -106,7 +107,10 @@ macro(sfml_add_library target)
 
     # link the target to its external dependencies
     if(THIS_EXTERNAL_LIBS)
-        target_link_libraries(${target} ${THIS_EXTERNAL_LIBS})
+        # but do it pritvate
+        foreach(extLib ${THIS_EXTERNAL_LIBS})
+            target_link_libraries(${target} PRIVATE ${extLib})
+        endforeach()
     endif()
 
     # add the install rule
