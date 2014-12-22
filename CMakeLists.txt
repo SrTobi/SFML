@@ -334,7 +334,7 @@ export(PACKAGE sfml)
 if(SFML_OS_WINDOWS)
 	set(config_install_dir cmake/)
 else()
-	set(config_install_dir share/sfml/cmake/)
+	set(config_install_dir share/SFML/cmake/)
 endif()
 
 # install targets, config and version files
