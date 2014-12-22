@@ -50,6 +50,9 @@ sfml_set_option(SFML_BUILD_DOC FALSE BOOL "TRUE to generate the API documentatio
 # add an option for choosing the OpenGL implementation
 sfml_set_option(SFML_OPENGL_ES ${OPENGL_ES} BOOL "TRUE to use an OpenGL ES implementation, FALSE to use a desktop OpenGL implementation")
 
+# add an option for exporting the local build
+sfml_set_option(SFML_EXPORT_LOCAL_BUILD TRUE BOOL "TRUE to export the local build to the cmake user registry, FALSE to do nothing")
+
 # Mac OS X specific options
 if(SFML_OS_MACOSX)
     # add an option to build frameworks instead of dylibs (release only)
@@ -328,7 +331,9 @@ export(EXPORT sfml-package-target
        NAMESPACE ${export_namespace})
 
 # register current build directory in the cmake user package registry
-export(PACKAGE sfml)
+if(${SFML_EXPORT_LOCAL_BUILD})
+    export(PACKAGE sfml)
+endif()
 
 # config files must be installed in special directories inside the install directory
 if(SFML_OS_WINDOWS)
